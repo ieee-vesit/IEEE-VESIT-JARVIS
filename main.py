@@ -14,7 +14,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import openai
 from config import apikey
 
-def chat(prompt):
+def chat(prompt): #for making the AI to chat
     global chatStr
     chatStr="User said: "+prompt+"\n Jarvis: "   
     openai.api_key=apikey
@@ -32,7 +32,7 @@ def chat(prompt):
     chatStr+=response["choices"][0]["text"]
     return chatStr
 
-def ai(prompt):
+def ai(prompt):    #for performing a task using AI
     openai.api_key=apikey
     # print(apikey)
 
@@ -45,9 +45,10 @@ def ai(prompt):
     frequency_penalty=0,
     presence_penalty=0
     )
-
-    print(response["choices"][0]["text"])
-
+    if not os.path.exists("Openai"):
+        os.mkdir("Openai")
+    with open("Openai/"+prompt+".txt","w") as f:
+        f.write(text)
 
 def say(text):
     engine = pyttsx3.init()
